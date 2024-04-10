@@ -14,7 +14,10 @@ const port = 8000;
 const app = express();
 
 //CONNECTION TO  ATLAS DB
-mongoose.connect(process.env.url);
+mongoose.connect(process.env.MONGODB_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
 let db = mongoose.connection;
 
 // Check connection
