@@ -1,0 +1,38 @@
+<table border="1" class="dataTable">
+  <tr>
+                <th>Title</th>
+                <th>Plot</th>
+                <th>Genres</th>
+                <th>Runtime</th>
+                <th>Cast</th>
+                <th>Poster</th>
+
+  </tr>
+        {{#if movie}}
+         {{#each movie}}
+            <tr>
+                <td>{{title}}</td>
+                <td>{{plot}}</td>
+                <td>{{#each genres}}
+                    {{this}}  
+                    {{#unless @last}},
+                     {{/unless}}
+                     {{/each}}</td>
+                <td>{{#each cast}}
+                    {{this}}  
+                    {{#unless @last}},
+                     {{/unless}}
+                     {{/each}}</td>
+                     <td>
+                {{#if this.poster}}
+                        <img src="{{this.poster}}" alt="{{this.title}} Poster" style="max-width: 100px;">
+                    {{else}}
+                        Image not available
+                    {{/if}}
+</td>
+                <td>{{runtime}} min</td>
+            </tr>
+            {{/each}}
+        {{/if}}
+        </table>
+    
