@@ -1,6 +1,7 @@
+require("dotenv").config();
 const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
-var User = require('../models/user');
+const User = mongoose.model("User");
 
 // Middleware function to check if the user is authenticated
 module.exports = (req, res, next) => {
@@ -15,14 +16,16 @@ module.exports = (req, res, next) => {
   const token = authorization.replace("Bearer ", "");
 
   // Verify the token
-  jwt.verify(token, "secret", async (err, payload) => {
+  jwt.verify(token, "MY_SECRET_KEY", async (err, payload) => {
     if (err) {
-      return res.status(401).send({ error: err });
+      return res.status(401).send({ error: "You must be logged in." });
     }
+
     // Extract the userId from the payload
     const { userId } = payload;
+
     // Find the user in the database using the userId
-    const user = await User.findById(userId).select("-password");
+    const user = await User.findById(userId);
 
     // Assign the user object to the req object for further use in the route handlers
     req.user = user;
